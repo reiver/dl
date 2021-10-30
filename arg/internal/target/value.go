@@ -25,20 +25,14 @@ func Receive(dst *optstr.String) error {
 		return errNilDestination
 	}
 
-	var src optstr.String = value
-
-	if optstr.Nothing() != src {
-		*dst = src
-		return nil
+	var arg0 optstr.String
+	{
+		if 1 <= flag.NArg() {
+			arg0 = optstr.Something(flag.Arg(0))
+		}
 	}
 
-	func(){
-		if 0 >= flag.NArg() {
-			return
-		}
+	optstr.Push(dst, value, arg0)
 
-		src = optstr.Something(flag.Arg(0))
-	}()
-
-	return errNotFound
+	return nil
 }

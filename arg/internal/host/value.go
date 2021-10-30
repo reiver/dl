@@ -27,34 +27,39 @@ func Receive(dst *optstr.String) error {
 		return errNilDestination
 	}
 
-	if optstr.Nothing() != value {
-		*dst = value
-		return nil
+	var fromtarget optstr.String
+	{
+		err := func() error {
+			var target optstr.String
+			{
+				err := argtarget.Receive(&target)
+				if nil != err {
+					return err
+				}
+			}
+
+			if optstr.Nothing() == target {
+				return nil
+			}
+
+			uri, err := url.Parse(target.String())
+			if nil == err {
+				x := uri.Hostname()
+				if "" != x {
+					fromtarget = optstr.Something(x)
+					return nil
+				}
+			}
+
+			return nil
+		}()
+
+		if nil != err {
+			return err
+		}
 	}
 
-	var src optstr.String
-	func(){
-		var target optstr.String
-		{
-			err := argtarget.Receive(&target)
-			if nil != err {
-				panic(err)
-			}
-		}
+	optstr.Push(dst, value, fromtarget)
 
-		if optstr.Nothing() == target {
-			return
-		}
-
-		uri, err := url.Parse(target.String())
-		if nil == err {
-			x := uri.Hostname()
-			if "" != x {
-				src = optstr.Something(x)
-			}
-		}
-	}()
-
-	*dst = src
 	return nil
 }
