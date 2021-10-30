@@ -13,7 +13,6 @@ func main() {
 
 	// If the user has told us to output log messages (that can, for example be used for debugging) then
 	// output the (command line) arguments we were given (as key-value pairs).
-
 	if 0 < arg.LogLevel {
 		fmt.Fprintf(os.Stderr, "help      🡆 %#t\n", arg.Help)
 		fmt.Fprintf(os.Stderr, "host      🡆 %#v\n", arg.Host)
@@ -34,12 +33,32 @@ func main() {
 	}
 
 	// If the user didn't provide any flags, switches, or parameters, on the command line then
-	// output the help message (on STDERR), and exit with an exit code of ‘usage error’ — i.e., 64 (sixty-four).
+	// output the help message (on STDERR), and exit with an exit code of ‘usage-error’ — i.e., 64 (sixty-four).
 	if optstr.Nothing() == arg.Target {
 		const exitCodeUsageError = 64
 
 		help.WriteTo(os.Stderr)
 		os.Exit(exitCodeUsageError)
+		return
+	}
+
+	// If the user provided the ‘target’ then we can (elsewhere in the code) infer the ‘scheme’ and ‘host’.
+	// Also, the user can override the ‘scheme’ and ‘host’ (inferred from the ‘target’).
+	//
+	// Thus, if for some weird reason we have the ‘target’ but don't have the ‘scheme’ or ‘host’ then
+	// some weird internal error (like a bug) happened so exit with an exit code of ‘internal-software-error’ — i.e., 70 (seventy).
+	if optstr.Nothing() == arg.Scheme {
+		const exitCodeInternalSoftwareError = 70
+
+		fmt.Println(os.Stderr, "uh oh! — internal software error: could not figure out the ‘scheme’")
+		os.Exit(exitCodeInternalSoftwareError)
+		return
+	}
+	if optstr.Nothing() == arg.Host {
+		const exitCodeInternalSoftwareError = 70
+
+		fmt.Println(os.Stderr, "uh oh! — internal software error: could not figure out the ‘host’")
+		os.Exit(exitCodeInternalSoftwareError)
 		return
 	}
 }
