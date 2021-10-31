@@ -5,7 +5,6 @@ import (
 	"github.com/reiver/dl/lib/help"
 	"github.com/reiver/dl/lib/opt/str"
 	"github.com/reiver/dl/lib/req"
-	_ "github.com/reiver/dl/scm"
 
 	"fmt"
 	"io"

@@ -4,6 +4,7 @@ import (
 	"github.com/reiver/dl/arg/internal/target"
 	"github.com/reiver/dl/lib/opt/str"
 	"github.com/reiver/dl/lib/req"
+	_ "github.com/reiver/dl/scm"
 
 	"flag"
 	"fmt"
