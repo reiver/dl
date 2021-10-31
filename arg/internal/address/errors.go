@@ -1,4 +1,4 @@
-package arghost
+package argaddress
 
 import (
 	"errors"

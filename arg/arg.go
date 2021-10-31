@@ -3,8 +3,8 @@ package arg
 import (
 	"github.com/reiver/dl/lib/opt/str"
 
+	"github.com/reiver/dl/arg/internal/address"
 	"github.com/reiver/dl/arg/internal/help"
-	"github.com/reiver/dl/arg/internal/host"
 	"github.com/reiver/dl/arg/internal/loglevel"
 	"github.com/reiver/dl/arg/internal/scheme"
 	"github.com/reiver/dl/arg/internal/target"
@@ -14,8 +14,8 @@ import (
 )
 
 var (
+	Address optstr.String
 	Help bool
-	Host optstr.String
 	LogLevel uint8 = 0
 	Scheme optstr.String
 	Target optstr.String
@@ -41,8 +41,8 @@ func init() {
 			panic(err)
 		}
 
-		// --host
-		err = arghost.Receive(&Host)
+		// --address
+		err = argaddress.Receive(&Address)
 		if nil != err {
 			panic(err)
 		}

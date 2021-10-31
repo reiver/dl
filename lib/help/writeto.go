@@ -13,18 +13,27 @@ func WriteTo(w io.Writer) (int64, error) {
 	var msg strings.Builder
 
 	fmt.Fprint(&msg,
-		"dl — a free utility for non-interactive downloading of files and streams"              +"\n\n"+
-		"usage:"                                                                                +"\n",
-		"\tdl [options] [target]"                                                               +"\n\n"+
-		"examples:"                                                                             +"\n"+
-		"\tdl gemini://example.com/apple/banana/cherry"                                         +"\n"+
-		"\tdl http://example.com/path/to/file.txt"                                              +"\n\n"+
-		"\tdl mercury://example.com/path/to/file.txt"                                           +"\n\n"+
-		"\tdl --target='gemini://example.com/apple/banana/cherry'"                              +"\n"+
-		"\tdl --target='http://example.com/path/to/file.txt'"                                   +"\n\n"+
-		"\tdl --host='cache.something.com' gemini://example.com/apple/banana/cherry"            +"\n\n"+
-		"\tdl --host='cache.something.com' --target='gemini://example.com/apple/banana/cherry'" +"\n\n"+
-		"flags:"                                                                                +"\n",
+		"dl — a free utility for non-interactive downloading of files and streams"                  +"\n"+
+		""                                                                                          +"\n"+
+		"usage:"                                                                                    +"\n",
+		"\tdl [options] [target]"                                                                   +"\n"+
+		""                                                                                          +"\n"+
+		"examples:"                                                                                 +"\n"+
+		"\tdl gemini://example.com/apple/banana/cherry"                                             +"\n"+
+		"\tdl http://example.com/path/to/file.txt"                                                  +"\n"+
+		"\tdl mercury://example.com/path/to/file.txt"                                               +"\n"+
+		""                                                                                          +"\n"+
+		"\tdl --target='gemini://example.com/apple/banana/cherry'"                                  +"\n"+
+		"\tdl --target='http://example.com/path/to/file.txt'"                                       +"\n"+
+		"\tdl --target='mercury://example.com/path/to/file.txt'"                                    +"\n"+
+		""                                                                                          +"\n"+
+		"\tdl --address='cache.something.com' gemini://example.com/apple/banana/cherry"             +"\n"+
+		"\tdl --address='cache.something.com' mercury://example.com/apple/banana/cherry"            +"\n"+
+		""                                                                                          +"\n"+
+		"\tdl --address='cache.something.com' --target='gemini://example.com/apple/banana/cherry'"  +"\n"+
+		"\tdl --address='cache.something.com' --target='mercury://example.com/apple/banana/cherry'" +"\n"+
+		""                                                                                          +"\n"+
+		"flags:"                                                                                    +"\n",
 	)
 	flag.VisitAll(func(fl *flag.Flag){
 		switch fl.Name {
