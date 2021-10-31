@@ -13,7 +13,7 @@ func WriteTo(w io.Writer) (int64, error) {
 	var msg strings.Builder
 
 	fmt.Fprint(&msg,
-		"dl — a free utility for non-interactive downloading of files and streams"                  +"\n"+
+		"dl — a program for downloading files and streams"                                          +"\n"+
 		""                                                                                          +"\n"+
 		"usage:"                                                                                    +"\n",
 		"\tdl [options] [target]"                                                                   +"\n"+
