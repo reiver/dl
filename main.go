@@ -18,7 +18,7 @@ func main() {
 	// output the (command line) arguments we were given (as key-value pairs).
 	if 0 < arg.LogLevel {
 		fmt.Fprintf(os.Stderr, "address   🡆 %#v\n", arg.Address)
-		fmt.Fprintf(os.Stderr, "help      🡆 %#t\n", arg.Help)
+		fmt.Fprintf(os.Stderr, "help      🡆 %t\n",  arg.Help)
 		fmt.Fprintf(os.Stderr, "log-level 🡆 %d\n",  arg.LogLevel)
 		fmt.Fprintf(os.Stderr, "scheme    🡆 %#v\n", arg.Scheme)
 		fmt.Fprintf(os.Stderr, "target    🡆 %#v\n", arg.Target)
