@@ -5,6 +5,7 @@ import (
 	"github.com/reiver/dl/lib/help"
 	"github.com/reiver/dl/lib/opt/str"
 	"github.com/reiver/dl/lib/req"
+	_ "github.com/reiver/dl/scm"
 
 	"fmt"
 	"io"
@@ -84,7 +85,11 @@ func main() {
 
 		readcloser, err = requestor.Request(arg.Address.String(), arg.Target.String())
 		if nil != err {
+			const exitCodeServiceUnavailable = 69
+
 			fmt.Fprintf(os.Stderr, "uh oh! — received an error when trying get data-connection to %q for %q: %s\n", arg.Address, arg.Target, err)
+			os.Exit(exitCodeServiceUnavailable)
+			return
 		}
 		defer func() {
 			err := readcloser.Close()
@@ -92,5 +97,16 @@ func main() {
 				fmt.Fprintf(os.Stderr, "uh oh! — received an error when trying to close data-connection to %q for %q: %s\n", arg.Address, arg.Target, err)
 			}
 		}()
+	}
+
+	{
+		_, err := io.Copy(os.Stdout, readcloser)
+		if nil != err {
+			const exitCodeTemporaryFailure = 75
+
+			fmt.Fprintf(os.Stderr, "uh oh! — received an error when trying to send the data downloaded from the request to %q for %q to STDOUT: %s\n", arg.Address, arg.Target, err)
+			os.Exit(exitCodeTemporaryFailure)
+			return
+		}
 	}
 }
